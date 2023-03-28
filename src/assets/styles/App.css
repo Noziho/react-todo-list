@@ -12,7 +12,14 @@ body {
   font-size: 1.6rem;
 }
 
+header {
+  padding: 1rem;
+  background: #F1F1F1;
+}
 .container {
   width: 100%;
   min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
