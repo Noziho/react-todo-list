@@ -3,7 +3,7 @@ import {useState} from "react";
 
 export const Task = ({task, setTaskList, setIsTaskUpdated}) => {
     const [editTaskValue, setEditTaskValue] = useState('');
-    const [isEditing, setIsEditing] = useState(false);
+    const [isEditingTask, setIsEditingTask] = useState(false);
 
     const handleDeleteTask = (taskId) => {
         setTaskList((prevList) => prevList.filter((task) => task.id !== taskId))
@@ -16,11 +16,11 @@ export const Task = ({task, setTaskList, setIsTaskUpdated}) => {
             )
         );
         setIsTaskUpdated(true);
-        setIsEditing(false);
+        setIsEditingTask(false);
     };
 
     function handleEditOnClick () {
-        setIsEditing(true);
+        setIsEditingTask(true);
     }
 
     function handleDelete () {
@@ -30,7 +30,7 @@ export const Task = ({task, setTaskList, setIsTaskUpdated}) => {
         handleEditTask(task.id);
     }
 
-    if (isEditing) {
+    if (isEditingTask) {
         return (
             <input type="text" value={editTaskValue} placeholder={task.taskName} onChange={e => {setEditTaskValue(e.target.value)}} onBlur={handleEditOnBlur}/>
         );
