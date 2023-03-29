@@ -1,16 +1,19 @@
 import './Task.css';
 import {useState} from "react";
 
-export const Task = ({task, setTaskList, setIsTaskUpdated}) => {
+export const Task = ({task, setTaskList, setIsTaskUpdated, setProgressValue, progressValue, setIsUpdateProgressValue}) => {
     const [editTaskValue, setEditTaskValue] = useState('');
     const [isEditingTask, setIsEditingTask] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
 
     const handleDeleteTask = (taskId) => {
         setTaskList((prevList) => prevList.filter((task) => task.id !== taskId))
+        if (task.complete === true) {
+            setProgressValue(progressValue - 1);
+        }
         setIsTaskUpdated(true);
     }
-    const handleEditTask = (taskId) => {
+    const handleEditTaskName = (taskId) => {
         setTaskList((prevList) =>
             prevList.map((task) =>
                 task.id === taskId ? { ...task, taskName: editTaskValue } : task
@@ -20,6 +23,16 @@ export const Task = ({task, setTaskList, setIsTaskUpdated}) => {
         setIsEditingTask(false);
     };
 
+    const handleEditTaskComplete = (status) => {
+        setTaskList((prevList) =>
+            prevList.map((task) =>
+                task.complete !== status ? { ...task, complete: status } : task
+            )
+        );
+        setIsTaskUpdated(true);
+        setIsEditingTask(false);
+    }
+
     function handleEditOnClick () {
         setIsEditingTask(true);
     }
@@ -28,15 +41,24 @@ export const Task = ({task, setTaskList, setIsTaskUpdated}) => {
         handleDeleteTask(task.id);
     }
     function handleEditOnBlur () {
-        handleEditTask(task.id);
+        handleEditTaskName(task.id);
     }
 
     const handleCheck = (e) => {
         setIsChecked(e.target.checked);
-    }
 
-    if (isChecked) {
-        console.log("Check")
+        if (e.target.checked) {
+            setProgressValue(progressValue + 1);
+            setIsUpdateProgressValue(true);
+            handleEditTaskComplete(true);
+        }
+        else {
+            setProgressValue(progressValue - 1);
+            setIsUpdateProgressValue(true);
+            handleEditTaskComplete(false);
+
+        }
+
     }
 
     if (isEditingTask) {

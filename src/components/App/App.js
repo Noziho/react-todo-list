@@ -10,10 +10,9 @@ function App() {
     if (isTaskUpdated) {
         setTaskList(taskList);
         setIsTaskUpdated(false);
-        console.log([...taskList])
     }
     const addTask = (inputData) => {
-        let taskListCopy = [...taskList, {id: taskList.length ,taskName: inputData, validation: false}];
+        let taskListCopy = [...taskList, {id: taskList.length ,taskName: inputData, complete: false}];
         setTaskList(taskListCopy);
     }
     return (
