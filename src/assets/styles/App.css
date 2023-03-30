@@ -23,3 +23,11 @@ header {
   align-items: center;
   justify-content: center;
 }
+
+.taskContainer {
+  width: 60%;
+  background: #F1F1F1;
+  min-height: 50rem;
+  padding: 2rem;
+
+}

@@ -1,7 +1,14 @@
 import './Task.css';
 import {useState} from "react";
 
-export const Task = ({task, setTaskList, setIsTaskUpdated, setProgressValue, progressValue, setIsUpdateProgressValue}) => {
+export const Task = ({
+                         task,
+                         setTaskList,
+                         setIsTaskUpdated,
+                         setProgressValue,
+                         progressValue,
+                         setIsUpdateProgressValue
+                     }) => {
     const [editTaskValue, setEditTaskValue] = useState('');
     const [isEditingTask, setIsEditingTask] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
@@ -14,9 +21,10 @@ export const Task = ({task, setTaskList, setIsTaskUpdated, setProgressValue, pro
         setIsTaskUpdated(true);
     }
     const handleEditTaskName = (taskId) => {
+        setIsChecked(false);
         setTaskList((prevList) =>
             prevList.map((task) =>
-                task.id === taskId ? { ...task, taskName: editTaskValue } : task
+                task.id === taskId ? {...task, taskName: editTaskValue, complete: false} : task
             )
         );
         setIsTaskUpdated(true);
@@ -26,21 +34,26 @@ export const Task = ({task, setTaskList, setIsTaskUpdated, setProgressValue, pro
     const handleEditTaskComplete = (status) => {
         setTaskList((prevList) =>
             prevList.map((task) =>
-                task.complete !== status ? { ...task, complete: status } : task
+                task.complete !== status ? {...task, complete: status} : task
             )
         );
         setIsTaskUpdated(true);
         setIsEditingTask(false);
     }
 
-    function handleEditOnClick () {
+    function handleEditOnClick() {
         setIsEditingTask(true);
+        if (progressValue > 0) {
+            setProgressValue(progressValue - 1)
+            setIsUpdateProgressValue(true);
+        }
     }
 
-    function handleDelete () {
+    function handleDelete() {
         handleDeleteTask(task.id);
     }
-    function handleEditOnBlur () {
+
+    function handleEditOnBlur() {
         handleEditTaskName(task.id);
     }
 
@@ -51,8 +64,7 @@ export const Task = ({task, setTaskList, setIsTaskUpdated, setProgressValue, pro
             setProgressValue(progressValue + 1);
             setIsUpdateProgressValue(true);
             handleEditTaskComplete(true);
-        }
-        else {
+        } else {
             setProgressValue(progressValue - 1);
             setIsUpdateProgressValue(true);
             handleEditTaskComplete(false);
@@ -63,15 +75,22 @@ export const Task = ({task, setTaskList, setIsTaskUpdated, setProgressValue, pro
 
     if (isEditingTask) {
         return (
-            <input type="text" value={editTaskValue} placeholder={task.taskName} onChange={e => {setEditTaskValue(e.target.value)}} onBlur={handleEditOnBlur}/>
+            <input type="text" value={editTaskValue} placeholder={task.taskName} onChange={e => {
+                setEditTaskValue(e.target.value)
+            }} onBlur={handleEditOnBlur}/>
         );
     } else {
         return (
-            <div className='task'>
-                <input type="checkbox" name="isChecked" onClick={handleCheck}/>
-                <p className={isChecked ? "taskChecked" : "notCheck"}>{task.taskName}</p>
-                <button onClick={handleDelete}>Delete</button>
-                <button onClick={handleEditOnClick}>Edit</button>
+            <div className={'task'}>
+                <div className={'taskNameContainer'}>
+                    <input type="checkbox" name="isChecked" onClick={handleCheck}/>
+                    <p className={isChecked ? "taskChecked" : "notCheck"}>{task.taskName}</p>
+                </div>
+
+                <div className={'taskButtonContainer'}>
+                    <button onClick={handleDelete}>Delete</button>
+                    <button onClick={handleEditOnClick}>Edit</button>
+                </div>
             </div>
         );
     }

@@ -1,3 +1,26 @@
 .taskChecked {
     text-decoration: line-through;
 }
+
+.task {
+    width: 100%;
+    background: #c1c1c1;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.taskNameContainer {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+}
+
+.taskButtonContainer > button {
+    margin-inline: 1rem;
+}

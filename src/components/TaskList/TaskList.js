@@ -23,7 +23,6 @@ export const TaskList = ({taskList, setTaskList, setIsTaskUpdated}) => {
                           key={task.id} task={task}
                           taskList={taskList}
                           progressValue={progressValue}>
-
                     </Task>
                 );
             })

@@ -12,13 +12,15 @@ function App() {
         setIsTaskUpdated(false);
     }
     const addTask = (inputData) => {
-        let taskListCopy = [...taskList, {id: taskList.length ,taskName: inputData, complete: false}];
+        let taskListCopy = [...taskList, {id: taskList.length, taskName: inputData, complete: false}];
         setTaskList(taskListCopy);
     }
     return (
         <div className="container">
-            <Taskbar addTask={addTask}></Taskbar>
-            <TaskList setIsTaskUpdated={setIsTaskUpdated} setTaskList={setTaskList} taskList={taskList}></TaskList>
+            <div className="taskContainer">
+                <Taskbar addTask={addTask}></Taskbar>
+                <TaskList setIsTaskUpdated={setIsTaskUpdated} setTaskList={setTaskList} taskList={taskList}></TaskList>
+            </div>
         </div>
     );
 }

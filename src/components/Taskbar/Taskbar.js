@@ -11,8 +11,8 @@ export const Taskbar = ({addTask}) => {
 
     return (
         <div>
-            <input type="text" value={inputData} onChange={e=> setInputData(e.target.value) }/>
-            <input type="submit" onClick={handleSubmit}/>
+            <input type="text" className={'taskBar'} value={inputData} onChange={e=> setInputData(e.target.value) }/>
+            <input type="submit" className={'submitButton'} onClick={handleSubmit}/>
         </div>
     )
     
